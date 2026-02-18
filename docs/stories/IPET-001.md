@@ -1,6 +1,6 @@
 ---
 story_id: IPET-001
-status: Pending
+status: In Review
 epic: Infraestrutura
 priority: Critical
 feature_section: Setup
@@ -31,16 +31,16 @@ I want a properly configured monorepo with all tools connected,
 So that I can start building features immediately without setup friction.
 
 ## Acceptance Criteria
-- [ ] Monorepo Turborepo funcional com 3 packages: `mobile`, `web`, `shared`
-- [ ] `mobile`: Expo app com TypeScript, rodando no iOS Simulator e/ou Android Emulator
-- [ ] `web`: Next.js 14+ com TypeScript e Tailwind CSS, rodando em localhost:3000
-- [ ] `shared`: Package com tipos TypeScript exportados e importáveis por mobile e web
-- [ ] Supabase projeto criado (free tier), URL e anon key configurados em `.env`
-- [ ] Supabase client inicializado em ambos os apps (mobile e web)
-- [ ] ESLint + Prettier configurados no monorepo
-- [ ] `.gitignore` correto (node_modules, .env, .expo, .next, etc.)
-- [ ] `README.md` do projeto com instruções de setup
-- [ ] Primeiro commit no Git com toda a estrutura
+- [x] Monorepo Turborepo funcional com 3 packages: `mobile`, `web`, `shared`
+- [x] `mobile`: Expo app com TypeScript, rodando no iOS Simulator e/ou Android Emulator
+- [x] `web`: Next.js 14+ com TypeScript e Tailwind CSS, rodando em localhost:3000
+- [x] `shared`: Package com tipos TypeScript exportados e importáveis por mobile e web
+- [x] Supabase projeto criado (free tier), URL e anon key configurados em `.env`
+- [x] Supabase client inicializado em ambos os apps (mobile e web)
+- [x] ESLint + Prettier configurados no monorepo
+- [x] `.gitignore` correto (node_modules, .env, .expo, .next, etc.)
+- [x] `README.md` do projeto com instruções de setup
+- [x] Primeiro commit no Git com toda a estrutura
 
 ## Technical Details
 
@@ -116,16 +116,36 @@ export function createSupabaseClient(url: string, anonKey: string) {
 ```
 
 ## Testing
-- [ ] `turbo dev` roda ambos os apps simultaneamente
-- [ ] Mobile app abre no simulator sem erros
-- [ ] Web app abre em localhost:3000 sem erros
-- [ ] Import de tipos compartilhados funciona em ambos os apps
-- [ ] Supabase connection funciona (console.log do client)
-- [ ] `turbo build` compila sem erros
-- [ ] `turbo lint` passa sem erros
+- [x] `turbo dev` roda ambos os apps simultaneamente
+- [x] Mobile app abre no simulator sem erros
+- [x] Web app abre em localhost:3000 sem erros
+- [x] Import de tipos compartilhados funciona em ambos os apps
+- [x] Supabase connection funciona (console.log do client)
+- [x] `turbo build` compila sem erros
+- [x] `turbo lint` passa sem erros
 
 ## File List
-*Auto-maintained*
+### Created
+- `package.json` — Root workspace configuration
+- `turbo.json` — Turborepo tasks configuration
+- `.eslintrc.js` — ESLint rules
+- `.prettierrc` — Prettier formatting
+- `README.md` — Project documentation
+- `apps/mobile/` — Expo app (React Native)
+  - `App.tsx` — Root component
+  - `app.json` — Expo configuration
+  - `package.json` — Dependencies
+  - `tsconfig.json` — TypeScript config
+  - `src/lib/supabase.ts` — Supabase client
+- `apps/web/` — Next.js dashboard
+  - `src/app/` — App Router pages
+  - `src/lib/supabase.ts` — Supabase client
+  - `tailwind.config.ts` — Tailwind CSS
+  - `next.config.ts` — Next.js config
+  - `tsconfig.json` — TypeScript config
+- `packages/shared/` — Shared types
+  - `src/types/` — 5 type modules (user, pet, petshop, booking, service)
+  - `tsconfig.json` — TypeScript config with composite flag
 
 ## Notes
 - Expo SDK 52+ recomendado (mais recente e estável)
