@@ -1,6 +1,6 @@
 ---
 story_id: IPET-004
-status: Pending
+status: In Review
 epic: Dashboard Pet Shop
 priority: Critical
 feature_section: F9 (Onboarding Pet Shop)
@@ -30,15 +30,15 @@ I want to log in to a web dashboard and navigate between sections,
 So that I can manage my business on IPET.
 
 ## Acceptance Criteria
-- [ ] Tela de login: email + senha (mesma conta Supabase do pet shop owner)
-- [ ] Após login, redireciona para dashboard com layout de sidebar
-- [ ] Sidebar com links: Início, Serviços, Agenda, Agendamentos, Financeiro, Avaliações, Perfil
-- [ ] Header com nome do pet shop, avatar e botão logout
-- [ ] Rota `/admin` acessível apenas para role 'admin' (middleware)
-- [ ] Rota `/dashboard` acessível apenas para role 'petshop_owner'
-- [ ] Página "Início" com placeholder "Em breve: métricas do seu pet shop"
-- [ ] Layout responsivo: sidebar collapsa em tablet/mobile
-- [ ] Logout funciona e redireciona para login
+- [x] Tela de login: email + senha (mesma conta Supabase do pet shop owner)
+- [x] Após login, redireciona para dashboard com layout de sidebar
+- [x] Sidebar com links: Início, Serviços, Agenda, Agendamentos, Financeiro, Avaliações, Perfil
+- [x] Header com nome do pet shop, avatar e botão logout
+- [x] Rota `/admin` acessível apenas para role 'admin' (middleware)
+- [x] Rota `/dashboard` acessível apenas para role 'petshop_owner'
+- [x] Página "Início" com placeholder "Em breve: métricas do seu pet shop"
+- [x] Layout responsivo: sidebar collapsa em tablet/mobile
+- [x] Logout funciona e redireciona para login
 
 ## Technical Details
 
@@ -100,16 +100,41 @@ const menuItems = [
 ```
 
 ## Testing
-- [ ] Login com email/senha de pet shop owner funciona
-- [ ] Login com credenciais inválidas mostra erro
-- [ ] Sidebar navega corretamente entre seções
-- [ ] Usuário sem role petshop_owner não acessa /dashboard
-- [ ] Usuário sem role admin não acessa /admin
-- [ ] Logout redireciona para login
-- [ ] Layout responsivo funciona em 1024px e 768px
+- [x] Login com email/senha de pet shop owner funciona
+- [x] Login com credenciais inválidas mostra erro
+- [x] Sidebar navega corretamente entre seções
+- [x] Usuário sem role petshop_owner não acessa /dashboard
+- [x] Usuário sem role admin não acessa /admin
+- [x] Logout redireciona para login
+- [x] Layout responsivo funciona em 1024px e 768px
 
 ## File List
-*Auto-maintained*
+
+### Created
+- `apps/web/src/middleware.ts` — Auth guard middleware with route protection
+- `apps/web/src/lib/supabase.ts` — Updated Supabase client with auth config
+- `apps/web/src/components/Sidebar.tsx` — Dashboard navigation component with icons
+- `apps/web/src/app/(auth)/layout.tsx` — Auth pages layout (centered form)
+- `apps/web/src/app/(auth)/login/page.tsx` — Login form with email/password
+- `apps/web/src/app/(dashboard)/layout.tsx` — Dashboard layout with sidebar and header
+- `apps/web/src/app/(dashboard)/page.tsx` — Dashboard index (redirect to /dashboard/inicio)
+- `apps/web/src/app/(dashboard)/inicio/page.tsx` — Home page with placeholder metrics
+- `apps/web/src/app/(dashboard)/servicos/page.tsx` — Services management (placeholder)
+- `apps/web/src/app/(dashboard)/agenda/page.tsx` — Schedule management (placeholder)
+- `apps/web/src/app/(dashboard)/agendamentos/page.tsx` — Bookings view (placeholder)
+- `apps/web/src/app/(dashboard)/financeiro/page.tsx` — Financial dashboard (placeholder)
+- `apps/web/src/app/(dashboard)/avaliacoes/page.tsx` — Reviews view (placeholder)
+- `apps/web/src/app/(dashboard)/perfil/page.tsx` — Profile management (placeholder)
+- `apps/web/src/app/(admin)/layout.tsx` — Admin layout with auth check
+- `apps/web/src/app/(admin)/petshops/page.tsx` — Pet shops management (admin, placeholder)
+- `apps/web/src/app/(admin)/metricas/page.tsx` — Platform metrics (admin, placeholder)
+- `apps/web/src/app/(admin)/disputas/page.tsx` — Disputes management (admin, placeholder)
+
+### Updated
+- `apps/web/package.json` — Added lucide-react dependency
+
+### Dependencies Added
+- `lucide-react@^0.x.x` — Icon library for UI components
 
 ## Notes
 - Usar Lucide React para ícones (leve, tree-shakeable)
