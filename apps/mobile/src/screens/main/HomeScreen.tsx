@@ -16,6 +16,13 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
       <TouchableOpacity
         style={styles.button}
+        onPress={() => navigation.navigate('MyPets')}
+      >
+        <Text style={styles.buttonText}>🐾 Meus Pets</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
         onPress={() => navigation.navigate('Profile')}
       >
         <Text style={styles.buttonText}>Ir para Perfil</Text>

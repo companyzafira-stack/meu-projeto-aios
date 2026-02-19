@@ -3,6 +3,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ActivityIndicator, View } from 'react-native';
 
 import { useAuth } from '../hooks/useAuth';
+import { useUserPets } from '../hooks/useUserPets';
+import type { Pet } from '../hooks/usePets';
 
 // Auth Screens
 import { WelcomeScreen } from '../screens/auth/WelcomeScreen';
@@ -15,6 +17,11 @@ import { VerifyEmailScreen } from '../screens/auth/VerifyEmailScreen';
 import { HomeScreen } from '../screens/main/HomeScreen';
 import { ProfileScreen } from '../screens/main/ProfileScreen';
 
+// Pet Screens
+import { AddPetScreen } from '../screens/pets/AddPetScreen';
+import { MyPetsScreen } from '../screens/pets/MyPetsScreen';
+import { PetDetailScreen } from '../screens/pets/PetDetailScreen';
+
 export type AuthStackParamList = {
   Welcome: undefined;
   SignUp: undefined;
@@ -26,9 +33,17 @@ export type AuthStackParamList = {
 export type MainStackParamList = {
   Home: undefined;
   Profile: undefined;
+  MyPets: undefined;
+  AddPet: { petId?: string; editingPet?: Pet };
+  PetDetail: { petId: string };
+};
+
+export type OnboardingStackParamList = {
+  AddPet: { petId?: string; editingPet?: Pet };
 };
 
 const AuthStack = createNativeStackNavigator<AuthStackParamList>();
+const OnboardingStack = createNativeStackNavigator<OnboardingStackParamList>();
 const MainStack = createNativeStackNavigator<MainStackParamList>();
 
 const AuthNavigator = () => {
@@ -47,6 +62,23 @@ const AuthNavigator = () => {
   );
 };
 
+const OnboardingNavigator = () => {
+  return (
+    <OnboardingStack.Navigator
+      screenOptions={{
+        headerShown: true,
+        headerBackTitle: 'Voltar',
+      }}
+    >
+      <OnboardingStack.Screen
+        name="AddPet"
+        component={AddPetScreen}
+        options={{ headerTitle: 'Cadastrar seu primeiro Pet' }}
+      />
+    </OnboardingStack.Navigator>
+  );
+};
+
 const MainNavigator = () => {
   return (
     <MainStack.Navigator
@@ -61,6 +93,21 @@ const MainNavigator = () => {
         options={{ headerTitle: 'IPET' }}
       />
       <MainStack.Screen
+        name="MyPets"
+        component={MyPetsScreen}
+        options={{ headerTitle: 'Meus Pets' }}
+      />
+      <MainStack.Screen
+        name="AddPet"
+        component={AddPetScreen}
+        options={{ headerTitle: 'Adicionar Pet' }}
+      />
+      <MainStack.Screen
+        name="PetDetail"
+        component={PetDetailScreen}
+        options={{ headerTitle: 'Detalhes do Pet' }}
+      />
+      <MainStack.Screen
         name="Profile"
         component={ProfileScreen}
         options={{ headerTitle: 'Meu Perfil' }}
@@ -70,7 +117,10 @@ const MainNavigator = () => {
 };
 
 export const RootNavigator = () => {
-  const { session, loading } = useAuth();
+  const { session, loading: authLoading } = useAuth();
+  const { hasPets, loading: petsLoading } = useUserPets();
+
+  const loading = authLoading || petsLoading;
 
   if (loading) {
     return (
@@ -82,7 +132,7 @@ export const RootNavigator = () => {
 
   return (
     <NavigationContainer>
-      {session ? <MainNavigator /> : <AuthNavigator />}
+      {!session ? <AuthNavigator /> : !hasPets ? <OnboardingNavigator /> : <MainNavigator />}
     </NavigationContainer>
   );
 };
