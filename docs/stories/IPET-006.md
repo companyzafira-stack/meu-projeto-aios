@@ -1,6 +1,6 @@
 ---
 story_id: IPET-006
-status: Pending
+status: In Review
 epic: App Tutor
 priority: High
 feature_section: F2 (Descoberta de Pet Shops)
@@ -29,14 +29,14 @@ I want to see nearby pet shops with prices and ratings,
 So that I can choose the best one for my pet.
 
 ## Acceptance Criteria
-- [ ] Home mostra lista de pet shops com status 'active' ordenados por distância
-- [ ] Card: foto de capa, nome, nota média (ex: 4.7 ★), nº avaliações, distância (ex: 1.2 km), "a partir de R$ 35"
-- [ ] Campo de busca no topo: filtra por nome do pet shop
-- [ ] Ordenação: Mais próximo (default), Melhor avaliado, Menor preço
-- [ ] Pull-to-refresh atualiza lista
-- [ ] Loading skeleton enquanto carrega
-- [ ] Estado vazio: "Nenhum pet shop encontrado na sua região"
-- [ ] Tocar no card navega para perfil do pet shop (IPET-009)
+- [x] Home mostra lista de pet shops com status 'active' ordenados por distância
+- [x] Card: foto de capa, nome, nota média (ex: 4.7 ★), nº avaliações, distância (ex: 1.2 km), "a partir de R$ 35"
+- [x] Campo de busca no topo: filtra por nome do pet shop
+- [x] Ordenação: Mais próximo (default), Melhor avaliado, Menor preço
+- [x] Pull-to-refresh atualiza lista
+- [x] Loading skeleton enquanto carrega
+- [x] Estado vazio: "Nenhum pet shop encontrado na sua região"
+- [x] Tocar no card navega para perfil do pet shop (IPET-009)
 
 ## Technical Details
 
@@ -138,17 +138,32 @@ export function usePetShops(lat: number, lng: number, sortBy: string) {
 ```
 
 ## Testing
-- [ ] Lista carrega pet shops com dados corretos
-- [ ] Distância é calculada corretamente
-- [ ] Busca por nome filtra corretamente
-- [ ] Ordenação funciona (distância, nota, preço)
-- [ ] Pull-to-refresh atualiza dados
-- [ ] Skeleton aparece durante loading
-- [ ] Estado vazio aparece quando não há resultados
-- [ ] Tocar no card navega corretamente
+- [x] Lista carrega pet shops com dados corretos
+- [x] Distância é calculada corretamente
+- [x] Busca por nome filtra corretamente
+- [x] Ordenação funciona (distância, nota, preço)
+- [x] Pull-to-refresh atualiza dados
+- [x] Skeleton aparece durante loading
+- [x] Estado vazio aparece quando não há resultados
+- [x] Tocar no card navega corretamente
 
 ## File List
-*Auto-maintained*
+
+### Created
+- `apps/mobile/src/hooks/useLocation.ts` — GPS location hook with permission handling
+- `apps/mobile/src/hooks/usePetShops.ts` — Pet shop discovery with Haversine distance calculation
+- `apps/mobile/src/screens/home/HomeScreen.tsx` — Main discovery screen with state management
+- `apps/mobile/src/screens/home/components/SearchBar.tsx` — Search input + sort buttons
+- `apps/mobile/src/screens/home/components/PetShopCard.tsx` — Individual pet shop card (iFood-style)
+- `apps/mobile/src/screens/home/components/PetShopCardSkeleton.tsx` — Loading placeholder
+- `apps/mobile/src/screens/home/components/EmptyState.tsx` — No results state
+
+### Updated
+- `apps/mobile/src/navigation/RootNavigator.tsx` — Updated HomeScreen import
+
+### Dependencies Added
+- `expo-location@^17.0.x` — GPS location services
+- `@tanstack/react-query@^5.0.x` — Data fetching & caching
 
 ## Notes
 - Usar TanStack Query (React Query) para cache + fetching
