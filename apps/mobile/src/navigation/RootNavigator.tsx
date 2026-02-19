@@ -13,8 +13,8 @@ import { LoginScreen } from '../screens/auth/LoginScreen';
 import { ForgotPasswordScreen } from '../screens/auth/ForgotPasswordScreen';
 import { VerifyEmailScreen } from '../screens/auth/VerifyEmailScreen';
 
-// Main Screens (placeholder)
-import { HomeScreen } from '../screens/main/HomeScreen';
+// Main Screens
+import { HomeScreen } from '../screens/home/HomeScreen';
 import { ProfileScreen } from '../screens/main/ProfileScreen';
 
 // Pet Screens
