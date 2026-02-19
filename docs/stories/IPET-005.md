@@ -1,6 +1,6 @@
 ---
 story_id: IPET-005
-status: Pending
+status: In Review
 epic: App Tutor
 priority: Critical
 feature_section: F1 (Onboarding - Cadastro de Pet)
@@ -30,17 +30,17 @@ I want to register my pets with name, breed, size, and photo,
 So that I can book services specific to each pet.
 
 ## Acceptance Criteria
-- [ ] Após primeiro login, tutor é direcionado para cadastrar primeiro pet (obrigatório)
-- [ ] Form: nome (obrigatório), espécie (dropdown: Cão/Gato), raça (texto), porte (P/M/G/GG), idade em meses (opcional), foto
-- [ ] Foto: botão para câmera ou galeria (expo-image-picker)
-- [ ] Foto é comprimida para <1MB antes de upload (expo-image-manipulator)
-- [ ] Foto salva no Supabase Storage, URL referenciada na tabela pets
-- [ ] Após cadastrar primeiro pet, tutor acessa Home
-- [ ] Tela "Meus Pets": lista todos os pets com foto, nome, raça, porte
-- [ ] Botão "+" para adicionar novo pet (máximo 5)
-- [ ] Toque no pet abre detalhes com opção de editar ou excluir
-- [ ] Confirmar antes de excluir ("Tem certeza que deseja remover Rex?")
-- [ ] Mensagem de erro se tentar cadastrar mais de 5 pets
+- [x] Após primeiro login, tutor é direcionado para cadastrar primeiro pet (obrigatório)
+- [x] Form: nome (obrigatório), espécie (dropdown: Cão/Gato), raça (texto), porte (P/M/G/GG), idade em meses (opcional), foto
+- [x] Foto: botão para câmera ou galeria (expo-image-picker)
+- [x] Foto é comprimida para <1MB antes de upload (expo-image-manipulator)
+- [x] Foto salva no Supabase Storage, URL referenciada na tabela pets
+- [x] Após cadastrar primeiro pet, tutor acessa Home
+- [x] Tela "Meus Pets": lista todos os pets com foto, nome, raça, porte
+- [x] Botão "+" para adicionar novo pet (máximo 5)
+- [x] Toque no pet abre detalhes com opção de editar ou excluir
+- [x] Confirmar antes de excluir ("Tem certeza que deseja remover Rex?")
+- [x] Mensagem de erro se tentar cadastrar mais de 5 pets
 
 ## Technical Details
 
@@ -105,18 +105,34 @@ const deletePet = (id) => supabase.from('pets').delete().eq('id', id);
 ```
 
 ## Testing
-- [ ] Cadastrar pet com todos os campos funciona
-- [ ] Foto da câmera é comprimida e salva no Storage
-- [ ] Foto da galeria é comprimida e salva no Storage
-- [ ] Foto aparece corretamente na lista e no detalhe
-- [ ] Editar pet atualiza dados no banco
-- [ ] Excluir pet remove do banco e da lista
-- [ ] Limite de 5 pets é respeitado
-- [ ] Validação: nome obrigatório, porte obrigatório, espécie obrigatória
-- [ ] Primeiro pet redireciona para Home após cadastro
+- [x] Cadastrar pet com todos os campos funciona
+- [x] Foto da câmera é comprimida e salva no Storage
+- [x] Foto da galeria é comprimida e salva no Storage
+- [x] Foto aparece corretamente na lista e no detalhe
+- [x] Editar pet atualiza dados no banco
+- [x] Excluir pet remove do banco e da lista
+- [x] Limite de 5 pets é respeitado
+- [x] Validação: nome obrigatório, porte obrigatório, espécie obrigatória
+- [x] Primeiro pet redireciona para Home após cadastro
 
 ## File List
-*Auto-maintained*
+
+### Created
+- `apps/mobile/src/hooks/usePets.ts` — Pet CRUD hook with Supabase integration
+- `apps/mobile/src/hooks/useUserPets.ts` — Hook to check if user has pets
+- `apps/mobile/src/lib/storage.ts` — Supabase Storage upload/delete operations
+- `apps/mobile/src/utils/imageCompression.ts` — Image compression utility (<1MB)
+- `apps/mobile/src/screens/pets/AddPetScreen.tsx` — Form for create/edit pet with photo picker
+- `apps/mobile/src/screens/pets/MyPetsScreen.tsx` — List all pets with FAB (+) button
+- `apps/mobile/src/screens/pets/PetDetailScreen.tsx` — Pet details with edit/delete options
+
+### Updated
+- `apps/mobile/src/navigation/RootNavigator.tsx` — Added pet screens, onboarding flow, conditional navigation
+- `apps/mobile/src/screens/main/HomeScreen.tsx` — Added "Meus Pets" button
+
+### Dependencies Added
+- `expo-image-picker@^15.0.x` — Camera and gallery image selection
+- `expo-image-manipulator@^13.0.x` — Image compression and resizing
 
 ## Notes
 - Supabase Storage: criar bucket 'pet-avatars' com public access
