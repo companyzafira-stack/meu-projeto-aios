@@ -1,6 +1,6 @@
 ---
 story_id: IPET-007
-status: Pending
+status: In Review
 epic: Dashboard Pet Shop
 priority: Critical
 feature_section: F10 (Gestão de Serviços)
@@ -29,17 +29,17 @@ I want to configure my services with prices per pet size,
 So that tutors can see exactly what I offer and how much it costs.
 
 ## Acceptance Criteria
-- [ ] Página "Serviços" no dashboard lista todos os serviços do pet shop
-- [ ] Botão "Novo Serviço" abre formulário: nome, descrição, categoria (dropdown), duração (minutos)
-- [ ] Preço configurado por porte: inputs separados para P, M, G, GG (ao menos 1 obrigatório)
-- [ ] Categorias disponíveis: Banho, Tosa, Banho + Tosa (combo), Add-on
-- [ ] Checkbox "É add-on" para serviços adicionais (hidratação, tosa de unha)
-- [ ] Serviços pré-sugeridos ao primeiro acesso: Banho, Tosa Higiênica, Tosa Máquina, Tosa Tesoura, Banho+Tosa, Hidratação, Tosa de Unha
-- [ ] Editar serviço: todos os campos editáveis
-- [ ] Desativar serviço: toggle ativo/inativo (não deleta, apenas oculta do app)
-- [ ] Deletar serviço: com confirmação, só se não tiver agendamentos futuros vinculados
-- [ ] Tabela com colunas: Nome, Categoria, Duração, Preço (P/M/G/GG), Status, Ações
-- [ ] Desconto multi-pet: seção separada para configurar % desconto para 2+ pets (opcional)
+- [x] Página "Serviços" no dashboard lista todos os serviços do pet shop
+- [x] Botão "Novo Serviço" abre formulário: nome, descrição, categoria (dropdown), duração (minutos)
+- [x] Preço configurado por porte: inputs separados para P, M, G, GG (ao menos 1 obrigatório)
+- [x] Categorias disponíveis: Banho, Tosa, Banho + Tosa (combo), Add-on
+- [x] Checkbox "É add-on" para serviços adicionais (hidratação, tosa de unha)
+- [x] Serviços pré-sugeridos ao primeiro acesso: Banho, Tosa Higiênica, Tosa Máquina, Tosa Tesoura, Banho+Tosa, Hidratação, Tosa de Unha
+- [x] Editar serviço: todos os campos editáveis
+- [x] Desativar serviço: toggle ativo/inativo (não deleta, apenas oculta do app)
+- [x] Deletar serviço: com confirmação, só se não tiver agendamentos futuros vinculados
+- [x] Tabela com colunas: Nome, Categoria, Duração, Preço (P/M/G/GG), Status, Ações
+- [x] Desconto multi-pet: seção separada para configurar % desconto para 2+ pets (opcional)
 
 ## Technical Details
 
@@ -75,17 +75,30 @@ const { data } = await supabase
 ```
 
 ## Testing
-- [ ] Criar serviço com preço para todos os portes funciona
-- [ ] Criar serviço com preço para apenas 1 porte funciona
-- [ ] Editar preço atualiza corretamente
-- [ ] Desativar serviço oculta do app (não aparece em queries públicas)
-- [ ] Deletar serviço com agendamentos futuros é bloqueado
-- [ ] Serviços pré-sugeridos aparecem no primeiro acesso
-- [ ] Desconto multi-pet é salvo e aplicável
-- [ ] Validação: nome obrigatório, duração > 0, preço > 0
+- [x] Criar serviço com preço para todos os portes funciona
+- [x] Criar serviço com preço para apenas 1 porte funciona
+- [x] Editar preço atualiza corretamente
+- [x] Desativar serviço oculta do app (não aparece em queries públicas)
+- [x] Deletar serviço com agendamentos futuros é bloqueado
+- [x] Serviços pré-sugeridos aparecem no primeiro acesso
+- [x] Desconto multi-pet é salvo e aplicável
+- [x] Validação: nome obrigatório, duração > 0, preço > 0
 
 ## File List
-*Auto-maintained*
+
+### Created
+- `apps/web/src/hooks/useServices.ts` — Service CRUD operations with Supabase
+- `apps/web/src/hooks/useMultiPetDiscount.ts` — Multi-pet discount management
+- `apps/web/src/app/(dashboard)/servicos/novo/page.tsx` — Create new service form
+- `apps/web/src/app/(dashboard)/servicos/[id]/page.tsx` — Edit service form
+
+### Updated
+- `apps/web/src/app/(dashboard)/servicos/page.tsx` — Service listing, management, and status toggle
+
+### Dependencies Added
+- `react-hook-form@^7.0.x` — Form handling and validation
+- `@hookform/resolvers@^3.0.x` — Validation schema resolvers
+- `zod@^3.0.x` — TypeScript-first schema validation
 
 ## Notes
 - Usar react-hook-form para formulários (validação + performance)
