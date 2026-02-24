@@ -16,6 +16,8 @@ import { VerifyEmailScreen } from '../screens/auth/VerifyEmailScreen';
 // Main Screens
 import { HomeScreen } from '../screens/home/HomeScreen';
 import { ProfileScreen } from '../screens/main/ProfileScreen';
+import { PetShopProfileScreen } from '../screens/petshop/PetShopProfileScreen';
+import { AllReviewsScreen } from '../screens/petshop/AllReviewsScreen';
 
 // Pet Screens
 import { AddPetScreen } from '../screens/pets/AddPetScreen';
@@ -36,6 +38,8 @@ export type MainStackParamList = {
   MyPets: undefined;
   AddPet: { petId?: string; editingPet?: Pet };
   PetDetail: { petId: string };
+  PetShopProfile: { petshopId: string; distance?: number };
+  AllReviews: { petshopId: string; petshopName: string };
 };
 
 export type OnboardingStackParamList = {
@@ -111,6 +115,18 @@ const MainNavigator = () => {
         name="Profile"
         component={ProfileScreen}
         options={{ headerTitle: 'Meu Perfil' }}
+      />
+      <MainStack.Screen
+        name="PetShopProfile"
+        component={PetShopProfileScreen}
+        options={{ headerTitle: 'Pet Shop' }}
+      />
+      <MainStack.Screen
+        name="AllReviews"
+        component={AllReviewsScreen}
+        options={({ route }) => ({
+          headerTitle: `Avaliações - ${route.params.petshopName}`,
+        })}
       />
     </MainStack.Navigator>
   );

@@ -21,7 +21,7 @@ type Props = NativeStackScreenProps<MainStackParamList, 'Home'>;
 
 type SortBy = 'distance' | 'rating' | 'price';
 
-export const HomeScreen: React.FC<Props> = () => {
+export const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const { location, loading: locationLoading, error: locationError } = useLocation();
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState<SortBy>('distance');
@@ -40,9 +40,8 @@ export const HomeScreen: React.FC<Props> = () => {
     setRefreshing(false);
   };
 
-  const handlePetShopPress = () => {
-    // TODO: Navigate to pet shop detail (IPET-009)
-    // navigation.navigate('PetShopDetail', { petshopId });
+  const handlePetShopPress = (petshopId: string, distance: number) => {
+    navigation.navigate('PetShopProfile', { petshopId, distance });
   };
 
   // Loading state - waiting for location
@@ -143,7 +142,7 @@ export const HomeScreen: React.FC<Props> = () => {
         renderItem={({ item }) => (
           <PetShopCard
             petshop={item}
-            onPress={handlePetShopPress}
+            onPress={() => handlePetShopPress(item.id, item.distance_km)}
           />
         )}
         keyExtractor={(item) => item.id}
