@@ -18,6 +18,7 @@ import { HomeScreen } from '../screens/home/HomeScreen';
 import { ProfileScreen } from '../screens/main/ProfileScreen';
 import { PetShopProfileScreen } from '../screens/petshop/PetShopProfileScreen';
 import { AllReviewsScreen } from '../screens/petshop/AllReviewsScreen';
+import { BookingFlowScreen } from '../screens/booking/BookingFlowScreen';
 
 // Pet Screens
 import { AddPetScreen } from '../screens/pets/AddPetScreen';
@@ -40,6 +41,7 @@ export type MainStackParamList = {
   PetDetail: { petId: string };
   PetShopProfile: { petshopId: string; distance?: number };
   AllReviews: { petshopId: string; petshopName: string };
+  BookingFlow: { petshopId: string; petshopName: string; petshopAddress: string };
 };
 
 export type OnboardingStackParamList = {
@@ -127,6 +129,11 @@ const MainNavigator = () => {
         options={({ route }) => ({
           headerTitle: `Avaliações - ${route.params.petshopName}`,
         })}
+      />
+      <MainStack.Screen
+        name="BookingFlow"
+        component={BookingFlowScreen}
+        options={{ headerTitle: 'Agendar', headerBackTitle: 'Voltar' }}
       />
     </MainStack.Navigator>
   );

@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  View,
-  ScrollView,
-  ActivityIndicator,
-  Text,
-  StyleSheet,
-  Alert,
-} from 'react-native';
+import { View, ScrollView, ActivityIndicator, Text, StyleSheet } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { MainStackParamList } from '@/navigation/RootNavigator';
 import { usePetShopProfile } from '@/hooks/usePetShopProfile';
@@ -41,10 +34,15 @@ export const PetShopProfileScreen: React.FC<Props> = ({ route, navigation }) => 
   };
 
   const handleBook = () => {
-    Alert.alert(
-      'Em breve',
-      'Fluxo de agendamento será implementado na IPET-010.'
-    );
+    if (!profile) {
+      return;
+    }
+
+    navigation.navigate('BookingFlow', {
+      petshopId: profile.id,
+      petshopName: profile.name,
+      petshopAddress: `${profile.address}, ${profile.city} - ${profile.state}`,
+    });
   };
 
   if (isLoading) {
