@@ -22,6 +22,8 @@ import { BookingFlowScreen } from '../screens/booking/BookingFlowScreen';
 import { BookingSuccessScreen } from '../screens/booking/BookingSuccessScreen';
 import { BookingPaymentFailedScreen } from '../screens/booking/BookingPaymentFailedScreen';
 import { BookingPendingScreen } from '../screens/booking/BookingPendingScreen';
+import { NotificationCenterScreen } from '../screens/notifications/NotificationCenterScreen';
+import { NotificationBell } from '../screens/notifications/components/NotificationBell';
 
 // Pet Screens
 import { AddPetScreen } from '../screens/pets/AddPetScreen';
@@ -48,6 +50,7 @@ export type MainStackParamList = {
   BookingSuccess: { bookingId: string };
   BookingPaymentFailed: { bookingId: string };
   BookingPending: { bookingId: string };
+  Notifications: undefined;
 };
 
 export type OnboardingStackParamList = {
@@ -102,7 +105,10 @@ const MainNavigator = () => {
       <MainStack.Screen
         name="Home"
         component={HomeScreen}
-        options={{ headerTitle: 'IPET' }}
+        options={{
+          headerTitle: 'IPET',
+          headerRight: () => <NotificationBell />,
+        }}
       />
       <MainStack.Screen
         name="MyPets"
@@ -155,6 +161,11 @@ const MainNavigator = () => {
         name="BookingPending"
         component={BookingPendingScreen}
         options={{ headerTitle: 'Processando', headerBackVisible: false }}
+      />
+      <MainStack.Screen
+        name="Notifications"
+        component={NotificationCenterScreen}
+        options={{ headerTitle: 'Notificações' }}
       />
     </MainStack.Navigator>
   );

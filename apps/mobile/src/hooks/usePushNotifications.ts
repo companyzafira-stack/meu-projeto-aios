@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Platform } from 'react-native';
+import { useQueryClient } from '@tanstack/react-query';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { supabase } from '@/lib/supabase';
@@ -15,6 +16,7 @@ Notifications.setNotificationHandler({
 
 export function usePushNotifications() {
   const { user } = useAuth();
+  const queryClient = useQueryClient();
   const [pushToken, setPushToken] = useState<string | null>(null);
   const notificationListener = useRef<Notifications.Subscription | null>(null);
   const responseListener = useRef<Notifications.Subscription | null>(null);
@@ -47,11 +49,13 @@ export function usePushNotifications() {
     notificationListener.current =
       Notifications.addNotificationReceivedListener((_notification) => {
         // Foreground notifications are displayed by the handler above.
+        void queryClient.invalidateQueries({ queryKey: ['notifications'] });
       });
 
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
         const data = response.notification.request.content.data;
+        void queryClient.invalidateQueries({ queryKey: ['notifications'] });
         void data;
       });
 
@@ -68,7 +72,7 @@ export function usePushNotifications() {
         responseListener.current = null;
       }
     };
-  }, [user]);
+  }, [queryClient, user]);
 
   return { pushToken };
 }
