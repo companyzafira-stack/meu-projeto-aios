@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
+  ActivityIndicator,
   Alert,
   Image,
   ScrollView,
@@ -11,6 +12,8 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { MainStackParamList } from '@/navigation/RootNavigator';
+import { useBookingStatus } from '@/hooks/useBookingStatus';
+import { usePayment } from '@/hooks/usePayment';
 import { useBooking } from '../context/BookingContext';
 import { useCreateBooking } from '../hooks/useCreateBooking';
 
@@ -38,7 +41,37 @@ export const ReviewStep: React.FC = () => {
     totalAmount,
     totalDuration,
   } = useBooking();
-  const { createBookingAsync, isCreating } = useCreateBooking();
+  const { createBookingAsync, isCreating: isCreatingBooking } = useCreateBooking();
+  const { createPreference, openCheckout, isCreating: isCreatingPayment } = usePayment();
+  const [bookingId, setBookingId] = useState<string | null>(null);
+  const [waitingPayment, setWaitingPayment] = useState(false);
+  const { booking: bookingStatus } = useBookingStatus(bookingId, waitingPayment);
+
+  useEffect(() => {
+    if (!waitingPayment || !bookingStatus) {
+      return;
+    }
+
+    if (bookingStatus.status === 'confirmed') {
+      setWaitingPayment(false);
+      dispatch({ type: 'RESET' });
+      Alert.alert('Pagamento Confirmado!', 'Seu agendamento foi confirmado.', [
+        {
+          text: 'OK',
+          onPress: () => navigation.navigate('Home'),
+        },
+      ]);
+      return;
+    }
+
+    if (bookingStatus.status === 'cancelled') {
+      setWaitingPayment(false);
+      Alert.alert(
+        'Pagamento Cancelado',
+        'O pagamento não foi aprovado. Tente novamente.'
+      );
+    }
+  }, [bookingStatus, dispatch, navigation, waitingPayment]);
 
   const handleConfirmBooking = async () => {
     if (!state.selectedDate || !state.selectedSlot) {
@@ -66,7 +99,7 @@ export const ReviewStep: React.FC = () => {
     }));
 
     try {
-      await createBookingAsync({
+      const booking = await createBookingAsync({
         petshopId: state.petshopId,
         bookingDate: state.selectedDate,
         startTime: state.selectedSlot.start,
@@ -75,24 +108,27 @@ export const ReviewStep: React.FC = () => {
         items: [...mainServiceItems, ...addonItems],
       });
 
-      dispatch({ type: 'RESET' });
-      Alert.alert(
-        'Agendamento Criado!',
-        'Seu agendamento foi criado. O pagamento será implementado em breve.',
-        [
-          {
-            text: 'OK',
-            onPress: () => navigation.navigate('Home'),
-          },
-        ]
-      );
-    } catch {
-      Alert.alert(
-        'Erro',
-        'Não foi possível criar o agendamento. Tente novamente.'
-      );
+      setBookingId(booking.id);
+
+      const preference = await createPreference(booking.id);
+      await openCheckout(preference);
+      setWaitingPayment(true);
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : 'Não foi possível iniciar o pagamento.';
+      Alert.alert('Erro', message);
     }
   };
+
+  const isButtonDisabled = isCreatingBooking || isCreatingPayment || waitingPayment;
+
+  const buttonLabel = waitingPayment
+    ? 'Aguardando pagamento...'
+    : isCreatingBooking || isCreatingPayment
+      ? 'Criando pagamento...'
+      : `Agendar e Pagar → ${formatPriceBRL(totalAmount)}`;
 
   return (
     <View style={styles.container}>
@@ -200,16 +236,17 @@ export const ReviewStep: React.FC = () => {
 
       <View style={styles.footer}>
         <TouchableOpacity
-          style={[styles.confirmButton, isCreating ? styles.confirmButtonDisabled : null]}
+          style={[styles.confirmButton, isButtonDisabled ? styles.confirmButtonDisabled : null]}
           onPress={handleConfirmBooking}
-          disabled={isCreating}
+          disabled={isButtonDisabled}
           activeOpacity={0.9}
         >
-          <Text style={styles.confirmButtonText}>
-            {isCreating
-              ? 'Criando agendamento...'
-              : `Agendar e Pagar → ${formatPriceBRL(totalAmount)}`}
-          </Text>
+          <View style={styles.confirmButtonContent}>
+            {(isCreatingBooking || isCreatingPayment || waitingPayment) ? (
+              <ActivityIndicator size="small" color="#fff" style={styles.buttonSpinner} />
+            ) : null}
+            <Text style={styles.confirmButtonText}>{buttonLabel}</Text>
+          </View>
         </TouchableOpacity>
       </View>
     </View>
@@ -421,6 +458,14 @@ const styles = StyleSheet.create({
   },
   confirmButtonDisabled: {
     backgroundColor: '#ccc',
+  },
+  confirmButtonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonSpinner: {
+    marginRight: 8,
   },
   confirmButtonText: {
     color: '#fff',
