@@ -6,6 +6,7 @@ import {
   validateWebhookSignature,
 } from '@/lib/mercadopago/webhooks';
 import { MP_CONFIG } from '@/lib/mercadopago/config';
+import { sendBookingConfirmedNotifications } from '@/lib/push/booking-notifications';
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -146,6 +147,12 @@ export async function POST(request: NextRequest) {
         { error: 'Failed to update booking' },
         { status: 500 }
       );
+    }
+
+    if (bookingStatus === 'confirmed') {
+      sendBookingConfirmedNotifications(bookingId).catch((notificationError) => {
+        console.error('Failed to send push notifications:', notificationError);
+      });
     }
 
     return NextResponse.json({ received: true });

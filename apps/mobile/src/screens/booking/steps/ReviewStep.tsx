@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -9,10 +9,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import * as WebBrowser from 'expo-web-browser';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { MainStackParamList } from '@/navigation/RootNavigator';
-import { useBookingStatus } from '@/hooks/useBookingStatus';
+import { supabase } from '@/lib/supabase';
 import { usePayment } from '@/hooks/usePayment';
 import { useBooking } from '../context/BookingContext';
 import { useCreateBooking } from '../hooks/useCreateBooking';
@@ -42,36 +43,7 @@ export const ReviewStep: React.FC = () => {
     totalDuration,
   } = useBooking();
   const { createBookingAsync, isCreating: isCreatingBooking } = useCreateBooking();
-  const { createPreference, openCheckout, isCreating: isCreatingPayment } = usePayment();
-  const [bookingId, setBookingId] = useState<string | null>(null);
-  const [waitingPayment, setWaitingPayment] = useState(false);
-  const { booking: bookingStatus } = useBookingStatus(bookingId, waitingPayment);
-
-  useEffect(() => {
-    if (!waitingPayment || !bookingStatus) {
-      return;
-    }
-
-    if (bookingStatus.status === 'confirmed') {
-      setWaitingPayment(false);
-      dispatch({ type: 'RESET' });
-      Alert.alert('Pagamento Confirmado!', 'Seu agendamento foi confirmado.', [
-        {
-          text: 'OK',
-          onPress: () => navigation.navigate('Home'),
-        },
-      ]);
-      return;
-    }
-
-    if (bookingStatus.status === 'cancelled') {
-      setWaitingPayment(false);
-      Alert.alert(
-        'Pagamento Cancelado',
-        'O pagamento não foi aprovado. Tente novamente.'
-      );
-    }
-  }, [bookingStatus, dispatch, navigation, waitingPayment]);
+  const { createPreference, isCreating: isCreatingPayment } = usePayment();
 
   const handleConfirmBooking = async () => {
     if (!state.selectedDate || !state.selectedSlot) {
@@ -108,11 +80,34 @@ export const ReviewStep: React.FC = () => {
         items: [...mainServiceItems, ...addonItems],
       });
 
-      setBookingId(booking.id);
-
       const preference = await createPreference(booking.id);
-      await openCheckout(preference);
-      setWaitingPayment(true);
+
+      await WebBrowser.openBrowserAsync(
+        __DEV__ ? preference.sandboxInitPoint : preference.initPoint,
+        { dismissButtonStyle: 'cancel', showTitle: true }
+      );
+
+      const { data: updatedBooking, error: bookingStatusError } = await supabase
+        .from('bookings')
+        .select('status, payment_status')
+        .eq('id', booking.id)
+        .single();
+
+      if (bookingStatusError) {
+        throw bookingStatusError;
+      }
+
+      const status = (updatedBooking as { status?: string; payment_status?: string | null })?.status;
+      const paymentStatus = (updatedBooking as { payment_status?: string | null })?.payment_status ?? null;
+
+      if (status === 'confirmed') {
+        dispatch({ type: 'RESET' });
+        navigation.navigate('BookingSuccess', { bookingId: booking.id });
+      } else if (paymentStatus === 'rejected' || status === 'cancelled') {
+        navigation.navigate('BookingPaymentFailed', { bookingId: booking.id });
+      } else {
+        navigation.navigate('BookingPending', { bookingId: booking.id });
+      }
     } catch (error) {
       const message =
         error instanceof Error
@@ -122,11 +117,10 @@ export const ReviewStep: React.FC = () => {
     }
   };
 
-  const isButtonDisabled = isCreatingBooking || isCreatingPayment || waitingPayment;
+  const isButtonDisabled = isCreatingBooking || isCreatingPayment;
 
-  const buttonLabel = waitingPayment
-    ? 'Aguardando pagamento...'
-    : isCreatingBooking || isCreatingPayment
+  const buttonLabel =
+    isCreatingBooking || isCreatingPayment
       ? 'Criando pagamento...'
       : `Agendar e Pagar → ${formatPriceBRL(totalAmount)}`;
 
@@ -242,7 +236,7 @@ export const ReviewStep: React.FC = () => {
           activeOpacity={0.9}
         >
           <View style={styles.confirmButtonContent}>
-            {(isCreatingBooking || isCreatingPayment || waitingPayment) ? (
+            {(isCreatingBooking || isCreatingPayment) ? (
               <ActivityIndicator size="small" color="#fff" style={styles.buttonSpinner} />
             ) : null}
             <Text style={styles.confirmButtonText}>{buttonLabel}</Text>

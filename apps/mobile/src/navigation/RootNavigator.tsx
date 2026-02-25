@@ -19,6 +19,9 @@ import { ProfileScreen } from '../screens/main/ProfileScreen';
 import { PetShopProfileScreen } from '../screens/petshop/PetShopProfileScreen';
 import { AllReviewsScreen } from '../screens/petshop/AllReviewsScreen';
 import { BookingFlowScreen } from '../screens/booking/BookingFlowScreen';
+import { BookingSuccessScreen } from '../screens/booking/BookingSuccessScreen';
+import { BookingPaymentFailedScreen } from '../screens/booking/BookingPaymentFailedScreen';
+import { BookingPendingScreen } from '../screens/booking/BookingPendingScreen';
 
 // Pet Screens
 import { AddPetScreen } from '../screens/pets/AddPetScreen';
@@ -42,6 +45,9 @@ export type MainStackParamList = {
   PetShopProfile: { petshopId: string; distance?: number };
   AllReviews: { petshopId: string; petshopName: string };
   BookingFlow: { petshopId: string; petshopName: string; petshopAddress: string };
+  BookingSuccess: { bookingId: string };
+  BookingPaymentFailed: { bookingId: string };
+  BookingPending: { bookingId: string };
 };
 
 export type OnboardingStackParamList = {
@@ -134,6 +140,21 @@ const MainNavigator = () => {
         name="BookingFlow"
         component={BookingFlowScreen}
         options={{ headerTitle: 'Agendar', headerBackTitle: 'Voltar' }}
+      />
+      <MainStack.Screen
+        name="BookingSuccess"
+        component={BookingSuccessScreen}
+        options={{ headerTitle: 'Agendamento Confirmado', headerBackVisible: false }}
+      />
+      <MainStack.Screen
+        name="BookingPaymentFailed"
+        component={BookingPaymentFailedScreen}
+        options={{ headerTitle: 'Pagamento', headerBackVisible: false }}
+      />
+      <MainStack.Screen
+        name="BookingPending"
+        component={BookingPendingScreen}
+        options={{ headerTitle: 'Processando', headerBackVisible: false }}
       />
     </MainStack.Navigator>
   );

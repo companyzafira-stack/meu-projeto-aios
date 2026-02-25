@@ -1,4 +1,3 @@
-import { Linking } from 'react-native';
 import { useMutation } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 
@@ -54,20 +53,8 @@ export function usePayment() {
     },
   });
 
-  const openCheckout = async (preference: PaymentPreference) => {
-    const url = __DEV__ ? preference.sandboxInitPoint : preference.initPoint;
-    const canOpen = await Linking.canOpenURL(url);
-
-    if (!canOpen) {
-      throw new Error('Não foi possível abrir o checkout');
-    }
-
-    await Linking.openURL(url);
-  };
-
   return {
     createPreference: mutation.mutateAsync,
-    openCheckout,
     isCreating: mutation.isPending,
     error: mutation.error ? mutation.error.message : null,
   };
