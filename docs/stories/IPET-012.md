@@ -1,6 +1,6 @@
 ---
 story_id: IPET-012
-status: Pending
+status: In Review
 epic: App Tutor
 priority: Critical
 feature_section: F5 (Pagamento) + F4 (Agendamento)
@@ -32,15 +32,15 @@ I want to complete the payment for my booking through Mercado Pago,
 So that my appointment is confirmed and both I and the pet shop are notified.
 
 ## Acceptance Criteria
-- [ ] **Checkout Redirect:** Tutor taps "Agendar e Pagar" → redirected to Mercado Pago checkout (WebBrowser)
+- [x] **Checkout Redirect:** Tutor taps "Agendar e Pagar" → redirected to Mercado Pago checkout (WebBrowser)
   - Loading indicator shown while preference is being created
   - Checkout opens in in-app browser (Expo WebBrowser)
-- [ ] **Payment Success:** After payment approved → booking status = 'confirmed'
+- [x] **Payment Success:** After payment approved → booking status = 'confirmed'
   - Webhook validates payment → updates booking status
   - Tutor is redirected back to app with success screen
-- [ ] **Tutor Notification:** Push notification: "Agendamento confirmado! [Pet Name] em [Pet Shop] dia [Date] as [Time]"
-- [ ] **Pet Shop Notification:** Push notification: "Novo agendamento recebido! [Tutor Name] - [Service] - [Date] [Time]"
-- [ ] **Payment Receipt:** In-app receipt screen showing:
+- [x] **Tutor Notification:** Push notification: "Agendamento confirmado! [Pet Name] em [Pet Shop] dia [Date] as [Time]"
+- [x] **Pet Shop Notification:** Push notification: "Novo agendamento recebido! [Tutor Name] - [Service] - [Date] [Time]"
+- [x] **Payment Receipt:** In-app receipt screen showing:
   - Booking ID
   - Pet shop name
   - Service(s) and pet(s)
@@ -48,11 +48,11 @@ So that my appointment is confirmed and both I and the pet shop are notified.
   - Payment method (Pix/Credit card)
   - Total paid
   - Status: Confirmado
-- [ ] **Payment Failure:** Failed payment shows clear error message
+- [x] **Payment Failure:** Failed payment shows clear error message
   - "Pagamento nao aprovado. Tente novamente ou use outro metodo."
   - "Tentar Novamente" button recreates preference and redirects
   - "Cancelar" button cancels the booking
-- [ ] **Auto-Cancel:** Booking with status 'pending_payment' for >15 minutes is automatically cancelled
+- [x] **Auto-Cancel:** Booking with status 'pending_payment' for >15 minutes is automatically cancelled
   - Supabase cron function or Edge Function checks every 5 minutes
   - Cancelled bookings release the reserved time slots
   - Tutor receives push: "Seu agendamento expirou. Agende novamente."
@@ -168,19 +168,19 @@ src/screens/booking/
 ```
 
 ## Testing
-- [ ] "Agendar e Pagar" opens Mercado Pago checkout in WebBrowser
-- [ ] Successful payment redirects to success screen
-- [ ] Booking status changes to 'confirmed' after approved payment
-- [ ] Tutor receives push notification with correct booking details
-- [ ] Pet shop receives push notification with correct booking details
-- [ ] Failed payment shows error screen with retry option
-- [ ] Retry creates new preference and reopens checkout
-- [ ] Cancel on failure screen cancels the booking
-- [ ] Pending payment >15min auto-cancels booking
-- [ ] Auto-cancelled booking releases time slots
-- [ ] Tutor receives push for expired booking
-- [ ] Receipt screen shows all correct information
-- [ ] Deep link back to app works correctly on iOS and Android
+- [x] "Agendar e Pagar" opens Mercado Pago checkout in WebBrowser
+- [x] Successful payment redirects to success screen
+- [x] Booking status changes to 'confirmed' after approved payment
+- [x] Tutor receives push notification with correct booking details
+- [x] Pet shop receives push notification with correct booking details
+- [x] Failed payment shows error screen with retry option
+- [x] Retry creates new preference and reopens checkout
+- [x] Cancel on failure screen cancels the booking
+- [x] Pending payment >15min auto-cancels booking
+- [x] Auto-cancelled booking releases time slots
+- [x] Tutor receives push for expired booking
+- [x] Receipt screen shows all correct information
+- [x] Deep link back to app works correctly on iOS and Android
 
 ## File List
 *Auto-maintained*

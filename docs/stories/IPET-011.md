@@ -1,6 +1,6 @@
 ---
 story_id: IPET-011
-status: Pending
+status: In Review
 epic: App Tutor
 priority: Critical
 feature_section: F5 (Pagamento)
@@ -32,22 +32,22 @@ I want to integrate Mercado Pago Marketplace with split payment,
 So that payments are automatically divided between the pet shop (90%) and the platform (10%).
 
 ## Acceptance Criteria
-- [ ] **Marketplace Account:** Mercado Pago Marketplace account configured with IPET CNPJ
-- [ ] **OAuth Flow:** Pet shop sellers connected via OAuth authorization flow
+- [x] **Marketplace Account:** Mercado Pago Marketplace account configured with IPET CNPJ
+- [x] **OAuth Flow:** Pet shop sellers connected via OAuth authorization flow
   - Pet shop clicks "Conectar Mercado Pago" in dashboard
   - Redirected to MP authorization page
   - On approval, `access_token` and `refresh_token` stored in `petshop_profiles` table
-- [ ] **Split Payment:** Payment preference created with marketplace split rules
+- [x] **Split Payment:** Payment preference created with marketplace split rules
   - 90% goes to pet shop seller (`collector_id`)
   - 10% retained by IPET marketplace (`marketplace_fee`)
-- [ ] **Payment Methods:** Pix and credit card both supported
+- [x] **Payment Methods:** Pix and credit card both supported
   - Pix: instant confirmation via webhook
   - Credit card: supports installments (up to 12x)
-- [ ] **Webhook Endpoint:** `/api/webhooks/mercadopago` receives payment notifications
+- [x] **Webhook Endpoint:** `/api/webhooks/mercadopago` receives payment notifications
   - Validates webhook signature (x-signature header)
   - Handles: `payment.created`, `payment.updated`
   - Updates booking status based on payment status
-- [ ] **Payment Tracking:** Payment status stored and tracked in bookings table
+- [x] **Payment Tracking:** Payment status stored and tracked in bookings table
   - Fields: `payment_id`, `payment_status`, `payment_method`, `paid_at`
   - Statuses: `pending`, `approved`, `rejected`, `refunded`
 
@@ -174,17 +174,17 @@ src/
 ```
 
 ## Testing
-- [ ] Mercado Pago Marketplace credentials configured (sandbox)
-- [ ] OAuth flow: pet shop authorizes → tokens stored correctly
-- [ ] OAuth flow: token refresh works when expired
-- [ ] Payment preference created with correct 90/10 split
-- [ ] Pix payment flow works end-to-end (sandbox)
-- [ ] Credit card payment flow works end-to-end (sandbox)
-- [ ] Webhook receives payment.created and updates booking
-- [ ] Webhook receives payment.updated (approved) and updates booking
-- [ ] Webhook signature validation rejects invalid requests
-- [ ] Booking payment_status updates correctly for all states
-- [ ] Refund flow works via MP API
+- [x] Mercado Pago Marketplace credentials configured (sandbox)
+- [x] OAuth flow: pet shop authorizes → tokens stored correctly
+- [x] OAuth flow: token refresh works when expired
+- [x] Payment preference created with correct 90/10 split
+- [x] Pix payment flow works end-to-end (sandbox)
+- [x] Credit card payment flow works end-to-end (sandbox)
+- [x] Webhook receives payment.created and updates booking
+- [x] Webhook receives payment.updated (approved) and updates booking
+- [x] Webhook signature validation rejects invalid requests
+- [x] Booking payment_status updates correctly for all states
+- [x] Refund flow works via MP API
 
 ## File List
 *Auto-maintained*

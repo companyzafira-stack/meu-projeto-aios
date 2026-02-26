@@ -1,6 +1,6 @@
 ---
 story_id: IPET-009
-status: Pending
+status: In Review
 epic: App Tutor
 priority: High
 feature_section: F3 (Perfil do Pet Shop)
@@ -30,17 +30,17 @@ I want to see a pet shop's profile with services, prices, and reviews,
 So that I can decide if I want to book a service there.
 
 ## Acceptance Criteria
-- [ ] Banner no topo com foto de capa do pet shop
-- [ ] Info: nome, endereço, telefone, horário de funcionamento, distância
-- [ ] Nota média em destaque (ex: 4.7 ★ com 23 avaliações)
-- [ ] Seção "Serviços": lista organizada por categoria (Banho, Tosa, Combo, Add-ons)
-- [ ] Cada serviço mostra: nome, descrição, duração, preço conforme porte do pet do tutor
-- [ ] Se tutor tem múltiplos pets com portes diferentes, mostra faixa de preço (ex: R$ 35-55)
-- [ ] Seção "Avaliações": 3 comentários mais recentes + nota + botão "Ver todas"
-- [ ] Tela "Todas as Avaliações": lista completa com filtro (mais recentes, melhores, piores)
-- [ ] Cada avaliação mostra: nome tutor, nota, comentário, data, resposta do pet shop (se houver)
-- [ ] Seção "Fotos": galeria de fotos do estabelecimento (horizontal scroll)
-- [ ] Botão fixo no footer: "Agendar" → navega para IPET-010
+- [x] Banner no topo com foto de capa do pet shop
+- [x] Info: nome, endereço, telefone, horário de funcionamento, distância
+- [x] Nota média em destaque (ex: 4.7 ★ com 23 avaliações)
+- [x] Seção "Serviços": lista organizada por categoria (Banho, Tosa, Combo, Add-ons)
+- [x] Cada serviço mostra: nome, descrição, duração, preço conforme porte do pet do tutor
+- [x] Se tutor tem múltiplos pets com portes diferentes, mostra faixa de preço (ex: R$ 35-55)
+- [x] Seção "Avaliações": 3 comentários mais recentes + nota + botão "Ver todas"
+- [x] Tela "Todas as Avaliações": lista completa com filtro (mais recentes, melhores, piores)
+- [x] Cada avaliação mostra: nome tutor, nota, comentário, data, resposta do pet shop (se houver)
+- [x] Seção "Fotos": galeria de fotos do estabelecimento (horizontal scroll)
+- [x] Botão fixo no footer: "Agendar" → navega para IPET-010
 
 ## Technical Details
 
@@ -77,16 +77,16 @@ src/screens/petshop/
 ```
 
 ## Testing
-- [ ] Perfil carrega com dados corretos (nome, endereço, nota)
-- [ ] Serviços agrupados por categoria corretamente
-- [ ] Preço exibido conforme porte do pet do tutor
-- [ ] Faixa de preço exibida para múltiplos pets com portes diferentes
-- [ ] Avaliações mostram 3 mais recentes
-- [ ] "Ver todas" navega para lista completa
-- [ ] Galeria de fotos com scroll horizontal funciona
-- [ ] Botão "Agendar" navega para booking flow
-- [ ] Pet shop sem avaliações mostra "Nenhuma avaliação ainda"
-- [ ] Pet shop sem fotos não mostra seção de galeria
+- [x] Perfil carrega com dados corretos (nome, endereço, nota)
+- [x] Serviços agrupados por categoria corretamente
+- [x] Preço exibido conforme porte do pet do tutor
+- [x] Faixa de preço exibida para múltiplos pets com portes diferentes
+- [x] Avaliações mostram 3 mais recentes
+- [x] "Ver todas" navega para lista completa
+- [x] Galeria de fotos com scroll horizontal funciona
+- [x] Botão "Agendar" navega para booking flow
+- [x] Pet shop sem avaliações mostra "Nenhuma avaliação ainda"
+- [x] Pet shop sem fotos não mostra seção de galeria
 
 ## File List
 *Auto-maintained*

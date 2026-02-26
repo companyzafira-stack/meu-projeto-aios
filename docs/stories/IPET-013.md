@@ -1,6 +1,6 @@
 ---
 story_id: IPET-013
-status: Pending
+status: In Review
 epic: App Tutor
 priority: High
 feature_section: F6 (Acompanhamento)
@@ -29,20 +29,20 @@ I want to receive push notifications about my bookings,
 So that I stay informed in real-time without checking the app constantly.
 
 ## Acceptance Criteria
-- [ ] Device push token registrado no login (salvo em profiles.push_token)
-- [ ] Notificação enviada em cada evento:
+- [x] Device push token registrado no login (salvo em profiles.push_token)
+- [x] Notificação enviada em cada evento:
   - `booking_confirmed` → tutor: "Agendamento confirmado!" + pet shop: "Novo agendamento!"
   - `reminder_24h` → tutor: "Lembrete: amanhã às [hora] no [pet shop]"
   - `reminder_2h` → tutor: "Daqui 2h: [pet] no [pet shop]"
   - `in_progress` → tutor: "[Pet] está sendo atendido!"
   - `completed` → tutor: "[Pet] está pronto! Veja como ficou 🐾"
   - `cancelled` → tutor/pet shop: "Agendamento cancelado"
-- [ ] Notificações funcionam com app em background e fechado
-- [ ] Central de notificações: ícone de sino no header do app
-- [ ] Badge com contagem de não lidas
-- [ ] Lista de notificações com título, corpo, data, status (lida/não lida)
-- [ ] Tocar na notificação navega para tela relevante (booking detail)
-- [ ] Marcar todas como lidas
+- [x] Notificações funcionam com app em background e fechado
+- [x] Central de notificações: ícone de sino no header do app
+- [x] Badge com contagem de não lidas
+- [x] Lista de notificações com título, corpo, data, status (lida/não lida)
+- [x] Tocar na notificação navega para tela relevante (booking detail)
+- [x] Marcar todas como lidas
 
 ## Technical Details
 
@@ -120,15 +120,15 @@ src/screens/notifications/
 ```
 
 ## Testing
-- [ ] Token registrado no login (verificar no banco)
-- [ ] Push recebido ao confirmar booking
-- [ ] Push recebido em background
-- [ ] Tocar na notificação abre tela correta
-- [ ] Central mostra notificações ordenadas por data
-- [ ] Badge count atualiza ao receber nova
-- [ ] Marcar como lida funciona
-- [ ] Reminder 24h enviado no horário correto
-- [ ] Reminder 2h enviado no horário correto
+- [x] Token registrado no login (verificar no banco)
+- [x] Push recebido ao confirmar booking
+- [x] Push recebido em background
+- [x] Tocar na notificação abre tela correta
+- [x] Central mostra notificações ordenadas por data
+- [x] Badge count atualiza ao receber nova
+- [x] Marcar como lida funciona
+- [x] Reminder 24h enviado no horário correto
+- [x] Reminder 2h enviado no horário correto
 
 ## File List
 *Auto-maintained*

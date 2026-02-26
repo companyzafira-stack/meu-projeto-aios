@@ -1,6 +1,6 @@
 ---
 story_id: IPET-010
-status: Pending
+status: In Review
 epic: App Tutor
 priority: Critical
 feature_section: F4 (Agendamento)
@@ -32,15 +32,15 @@ I want to select my pets, choose services, pick a time slot, and review the book
 So that I can proceed to payment and confirm the appointment.
 
 ## Acceptance Criteria
-- [ ] **Step 1 — Selecionar Pets:** lista de pets do tutor com checkbox. Selecionar 1 ou mais
-- [ ] **Step 2 — Escolher Serviços:** para cada pet selecionado, escolher serviço principal + add-ons opcionais
+- [x] **Step 1 — Selecionar Pets:** lista de pets do tutor com checkbox. Selecionar 1 ou mais
+- [x] **Step 2 — Escolher Serviços:** para cada pet selecionado, escolher serviço principal + add-ons opcionais
   - Preço atualiza conforme porte do pet
   - Add-ons (hidratação, tosa de unha) são toggles opcionais
-- [ ] **Step 3 — Escolher Data:** calendário com próximos 14 dias. Dias sem slots disponíveis estão desabilitados
-- [ ] **Step 4 — Escolher Horário:** lista de slots disponíveis para o dia selecionado
+- [x] **Step 3 — Escolher Data:** calendário com próximos 14 dias. Dias sem slots disponíveis estão desabilitados
+- [x] **Step 4 — Escolher Horário:** lista de slots disponíveis para o dia selecionado
   - Para multi-pet, mostra apenas horários com slots consecutivos suficientes
   - Ex: 2 pets × 60min = precisa de 2 slots consecutivos de 60min
-- [ ] **Step 5 — Resumo:** tela com todas as informações:
+- [x] **Step 5 — Resumo:** tela com todas as informações:
   - Pet shop: nome e endereço
   - Pets: nome + serviço + preço de cada um
   - Data e horário
@@ -48,8 +48,8 @@ So that I can proceed to payment and confirm the appointment.
   - Preço total
   - Tempo total estimado
   - Política de cancelamento (texto resumido)
-- [ ] Botão "Agendar e Pagar → R$ XX" navega para checkout (IPET-011/012)
-- [ ] Booking é criado no banco com status 'pending_payment'
+- [x] Botão "Agendar e Pagar → R$ XX" navega para checkout (IPET-011/012)
+- [x] Booking é criado no banco com status 'pending_payment'
 
 ## Technical Details
 
@@ -129,18 +129,18 @@ src/screens/booking/
 ```
 
 ## Testing
-- [ ] Selecionar 1 pet e 1 serviço funciona
-- [ ] Selecionar 2 pets com serviços diferentes funciona
-- [ ] Preço calculado corretamente por porte
-- [ ] Add-ons adicionam ao preço total
-- [ ] Desconto multi-pet aplicado corretamente (se configurado)
-- [ ] Calendário mostra apenas dias com slots disponíveis
-- [ ] Multi-pet mostra apenas slots com espaço consecutivo
-- [ ] Resumo mostra todos os dados corretos
-- [ ] Booking criado com status pending_payment
-- [ ] Booking items criados com referência correta (pet + serviço)
-- [ ] Back navigation funciona entre steps
-- [ ] Validação: ao menos 1 pet selecionado, serviço obrigatório
+- [x] Selecionar 1 pet e 1 serviço funciona
+- [x] Selecionar 2 pets com serviços diferentes funciona
+- [x] Preço calculado corretamente por porte
+- [x] Add-ons adicionam ao preço total
+- [x] Desconto multi-pet aplicado corretamente (se configurado)
+- [x] Calendário mostra apenas dias com slots disponíveis
+- [x] Multi-pet mostra apenas slots com espaço consecutivo
+- [x] Resumo mostra todos os dados corretos
+- [x] Booking criado com status pending_payment
+- [x] Booking items criados com referência correta (pet + serviço)
+- [x] Back navigation funciona entre steps
+- [x] Validação: ao menos 1 pet selecionado, serviço obrigatório
 
 ## File List
 *Auto-maintained*
