@@ -69,7 +69,7 @@ export default function ServicosPage() {
           <p className="text-gray-600">Gerencie seu catálogo de serviços</p>
         </div>
         <Link
-          href="/dashboard/servicos/novo"
+          href="/servicos/novo"
           className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition"
         >
           <Plus size={20} />
@@ -87,7 +87,7 @@ export default function ServicosPage() {
           <div className="p-6 text-center">
             <p className="text-gray-600">Nenhum serviço cadastrado ainda.</p>
             <Link
-              href="/dashboard/servicos/novo"
+              href="/servicos/novo"
               className="text-red-500 hover:text-red-600 font-semibold"
             >
               Criar primeiro serviço
@@ -181,7 +181,7 @@ export default function ServicosPage() {
                     <td className="px-6 py-4">
                       <div className="flex gap-2">
                         <Link
-                          href={`/dashboard/servicos/${service.id}`}
+                          href={`/servicos/${service.id}`}
                           className="text-blue-600 hover:text-blue-800 transition"
                         >
                           <Edit size={18} />

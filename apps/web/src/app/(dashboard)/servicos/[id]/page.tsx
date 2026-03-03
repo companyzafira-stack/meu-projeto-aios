@@ -136,7 +136,7 @@ export default function EditarServicoPage() {
         }))
       );
 
-      router.push('/dashboard/servicos');
+      router.push('/servicos');
     } catch (err) {
       setError(
         err instanceof Error ? err.message : 'Erro ao atualizar serviço'
@@ -150,7 +150,7 @@ export default function EditarServicoPage() {
     <div className="max-w-2xl mx-auto">
       {/* Header */}
       <Link
-        href="/dashboard/servicos"
+        href="/servicos"
         className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition"
       >
         <ArrowLeft size={20} />
@@ -317,7 +317,7 @@ export default function EditarServicoPage() {
         {/* Buttons */}
         <div className="flex gap-4 border-t pt-6">
           <Link
-            href="/dashboard/servicos"
+            href="/servicos"
             className="flex-1 text-center px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium"
           >
             Cancelar

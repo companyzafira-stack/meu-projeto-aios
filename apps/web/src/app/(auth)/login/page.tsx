@@ -17,7 +17,7 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const { error: authError } = await supabase.auth.signInWithPassword({
+      const { data, error: authError } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
@@ -27,8 +27,13 @@ export default function LoginPage() {
         return;
       }
 
+      // Set cookie so middleware can detect auth
+      if (data.session) {
+        document.cookie = `sb-auth-token=${data.session.access_token}; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Lax`;
+      }
+
       // Redirect to dashboard on successful login
-      router.push('/dashboard');
+      router.push('/inicio');
     } catch {
       setError('Erro ao fazer login. Tente novamente.');
     } finally {

@@ -16,13 +16,13 @@ import {
 } from 'lucide-react';
 
 const menuItems = [
-  { label: 'Início', href: '/dashboard/inicio', icon: Home },
-  { label: 'Serviços', href: '/dashboard/servicos', icon: Scissors },
-  { label: 'Agenda', href: '/dashboard/agenda', icon: Calendar },
-  { label: 'Agendamentos', href: '/dashboard/agendamentos', icon: Clipboard },
-  { label: 'Financeiro', href: '/dashboard/financeiro', icon: DollarSign },
-  { label: 'Avaliações', href: '/dashboard/avaliacoes', icon: Star },
-  { label: 'Perfil', href: '/dashboard/perfil', icon: User },
+  { label: 'Início', href: '/inicio', icon: Home },
+  { label: 'Serviços', href: '/servicos', icon: Scissors },
+  { label: 'Agenda', href: '/agenda', icon: Calendar },
+  { label: 'Agendamentos', href: '/agendamentos', icon: Clipboard },
+  { label: 'Financeiro', href: '/financeiro', icon: DollarSign },
+  { label: 'Avaliações', href: '/avaliacoes', icon: Star },
+  { label: 'Perfil', href: '/perfil', icon: User },
 ];
 
 export function Sidebar({ onClose }: { onClose?: () => void }) {

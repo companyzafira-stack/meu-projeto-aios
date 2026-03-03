@@ -51,13 +51,12 @@ export function MercadoPagoConnect() {
         return;
       }
 
-      const currentPetshopId = session.user.id;
-      setPetshopId(currentPetshopId);
+      const userId = session.user.id;
 
       const { data, error: fetchError } = await supabase
         .from('petshops')
         .select('id, mp_user_id, mp_connected_at')
-        .eq('id', currentPetshopId)
+        .eq('owner_id', userId)
         .single();
 
       if (!isMounted) {
@@ -70,6 +69,7 @@ export function MercadoPagoConnect() {
         return;
       }
 
+      setPetshopId(data.id);
       setStatus(data as MercadoPagoStatus);
       setLoading(false);
     };

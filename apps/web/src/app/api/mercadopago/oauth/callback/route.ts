@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
 
   if (!code || !state) {
     return NextResponse.redirect(
-      new URL('/dashboard/perfil?mp_error=missing_params', request.url)
+      new URL('/perfil?mp_error=missing_params', request.url)
     );
   }
 
@@ -36,12 +36,12 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.redirect(
-      new URL('/dashboard/perfil?mp_connected=true', request.url)
+      new URL('/perfil?mp_connected=true', request.url)
     );
   } catch (error) {
     console.error('MP OAuth callback error:', error);
     return NextResponse.redirect(
-      new URL('/dashboard/perfil?mp_error=oauth_failed', request.url)
+      new URL('/perfil?mp_error=oauth_failed', request.url)
     );
   }
 }
